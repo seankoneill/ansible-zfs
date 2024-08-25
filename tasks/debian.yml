@@ -28,10 +28,25 @@
         debian_release: '{{ default_debian_distribution + "-backports" }}'
   when: debian_use_backports
 
+- name: debian | install pve headers
+  apt:
+    name:
+      - pve-headers-{{ ansible_kernel }}
+    state: present
+    default_release: "{{ debian_release }}"
+  when: is_pve_kernel
+
+- name: debian | install linux headers
+  apt:
+    name:
+      - linux-headers-{{ ansible_kernel }}
+    state: present
+    default_release: "{{ debian_release }}"
+  when: not is_pve_kernel
+
 - name: debian | install zfs
   apt: 
     name:
-      - linux-headers-{{ ansible_kernel }}
       - zfsutils-linux
       - zfs-dkms
     state: present

@@ -5,13 +5,6 @@
     zfs_install_update: true
   when: zfs_install_update is undefined
 
-- name: Get kernel_release
-  command: uname -r
-  register: kernel_release
-
-- set_fact:
-    is_pve_kernel: "{{ 'pve' in kernel_release.stdout }}"
-
 - include_tasks: debian.yml
   when: ansible_distribution == "Debian" and zfs_install_update == true
 

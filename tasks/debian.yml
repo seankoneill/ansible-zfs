@@ -34,7 +34,7 @@
       - pve-headers-{{ ansible_kernel }}
     state: present
     default_release: "{{ debian_release }}"
-  when: is_pve_kernel
+  when: pve in ansible_kernel
 
 - name: debian | install linux headers
   apt:
@@ -42,7 +42,7 @@
       - linux-headers-{{ ansible_kernel }}
     state: present
     default_release: "{{ debian_release }}"
-  when: not is_pve_kernel
+  when: pve not in ansible_kernel
 
 - name: debian | install zfs
   apt: 
